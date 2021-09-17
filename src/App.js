@@ -1,25 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import LoginForm from './components/Top/loginForm';
+import KommunicateChat from './components/Top/chat';
+import {Route,withRouter,Link} from "react-router-dom";
+import Header from './components/Top/header';
+import PrivateRoute from './components/Top/privateRoute';
+import PasswordReset from './components/Top/passwordReset';
 
-function App() {
+const App = withRouter (({location})  =>  {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      {
+        location.pathname !== '/chat' && location.pathname !== '/reset' && <Header/>
+      }
+      <div className="container d-flex align-items-center flex-column">
+      <Route exact path ='/' component ={LoginForm} />
+      <PrivateRoute path = '/chat' component = {KommunicateChat} />
+      <Route path = '/reset' component={PasswordReset}/>
+      </div>
+      </div>
+  )
+})
 
-export default App;
+export default withRouter(App);
